@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>
+       Tugas Uas
+    </title>
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="./css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="./css/custom.css" type="text/css" rel="stylesheet" media="screen,projection" />
+</head>
+
+<body>
+    <noscript>
+      <strong>We're sorry but Sthis web doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>  
+    <div id="app"> 
+
+        <!---------BACKGROUND---------->
+        <div id="bg"></div>
+        
+        <!---------LOADING---------->
+        <div class="preloader-background" v-show="is_loading">
+            
+            <div class="valign-wrapper" style="width:100%;height:100%;position: absolute;">
+                <div class="valign" style="width:100%;">
+                    <div class="container">
+                        <div class="row">
+                            <div class="center col s12 m6 offset-m3">
+                            <div class="preloader-wrapper big active">
+                                <div class="spinner-layer spinner-orange-only">
+                                    <div class="circle-clipper left">
+                                    <div class="circle"></div>
+                                    </div><div class="gap-patch">
+                                    <div class="circle"></div>
+                                    </div><div class="circle-clipper right">
+                                    <div class="circle"></div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+ 
+        <!---------MAIN PAGE---------->
+        <div v-show="getPageName == 'main-page'">
+            <div class="container">
+                <h2>Covid-19 Summary</h2>
+            	<div class="row">
+                    <div class="col s6">
+                        <div class="card horizontal">
+                            <div class="card-stacked">
+                                <div class="card-content">
+                                <h5>New Confirmed</h5></div>
+                                <div class="card-action">
+                                <a href="#" class="black-text">{{ numberWithCommas(summary.NewConfirmed) }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s6">
+                        <div class="card horizontal">
+                            <div class="card-stacked">
+                                <div class="card-content">
+                                <h5>Total Confirmed</h5>
+                                </div>
+                                <div class="card-action">
+                                <a href="#" class="black-text">{{ numberWithCommas(summary.TotalConfirmed) }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s6">
+                        <div class="card horizontal">
+                            <div class="card-stacked">
+                                <div class="card-content">
+                                <h5>New Deaths</h5>
+                                </div>
+                                <div class="card-action">
+                                <a href="#" class="red-text">{{ numberWithCommas(summary.NewDeaths) }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s6">
+                        <div class="card horizontal">
+                            <div class="card-stacked">
+                                <div class="card-content">
+                                <h5>Total Deaths</h5>
+                                </div>
+                                <div class="card-action">
+                                <a href="#" class="red-text">{{ numberWithCommas(summary.TotalDeaths) }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                                                                
+                    <div class="col s6">
+                        <div class="card horizontal">
+                            <div class="card-stacked">
+                                <div class="card-content">
+                                <h5>New Recovered</h5>
+                                </div>
+                                <div class="card-action">
+                                <a href="#" class="green-text">{{ numberWithCommas(summary.NewRecovered) }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s6">
+                        <div class="card horizontal">
+                            <div class="card-stacked">
+                                <div class="card-content">
+                                <h5>Total Recovered</h5>
+                                </div>
+                                <div class="card-action">
+                                <a href="#" class="green-text">{{ numberWithCommas(summary.TotalRecovered) }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-panel responsive-table">
+                    <div id="container" style="height:500px"></div>
+                </div>
+                <div class="card-panel">
+                    <table class="highlight responsive-table">
+                        <thead>
+                            <tr>
+                                <th>Country</th>
+                                <th>New Confirmed</th>
+                                <th>Total Confirmed</th>
+                                <th>New Deaths</th>
+                                <th>Total Deaths</th>
+                                <th>New Recovered</th>
+                                <th>Total Recovered</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="country in countries" v-bind:key="country.CountryCode">
+                                <th>{{ country.Country }}</th>
+                                <th>{{ country.NewConfirmed }}</th>
+                                <th>{{ country.TotalConfirmed }}</th>
+                                <th>{{ country.NewDeaths }}</th>
+                                <th>{{ country.TotalDeaths }}</th>
+                                <th>{{ country.NewRecovered }}</th>
+                                <th>{{ country.TotalRecovered }}</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- built files will be auto injected -->
+    <!--  Scripts-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
+    <script src="./js/materialize.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="./main.js"></script>
+</body>
+
+</html>
